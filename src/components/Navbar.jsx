@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Car, Menu, X } from 'lucide-react';
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('userId'));
   const location = useLocation();
+
+  // Pages that have dark background — navbar stays transparent
+  const darkPages = ['/'];
+
+  // Check if current page needs dark navbar always
+  const isLightPage = !darkPages.includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,24 +22,49 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Check login status on component mount and when storage changes
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('userId'));
+    
+    // Listen for login/logout events
+    const handleLoginEvent = () => {
+      setIsLoggedIn(!!localStorage.getItem('userId'));
+    };
+    
+    window.addEventListener('userLogin', handleLoginEvent);
+    window.addEventListener('userLogout', handleLoginEvent);
+    
+    return () => {
+      window.removeEventListener('userLogin', handleLoginEvent);
+      window.removeEventListener('userLogout', handleLoginEvent);
+    };
+  }, []);
+
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Cars', path: '/cars' },
-    { name: 'Dashboard', path: '/dashboard' },
     { name: 'Login', path: '/login' },
     { name: 'Register', path: '/register' },
   ];
 
+  const isDark = isLightPage || scrolled;
+
   return (
     <nav style={{
       ...styles.navbar,
-      backgroundColor: scrolled ? 'rgba(15, 15, 30, 0.95)' : 'transparent',
-      boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.3)' : 'none',
-      backdropFilter: scrolled ? 'blur(10px)' : 'none',
+      backgroundColor: isDark
+        ? 'rgba(15, 15, 30, 0.97)'
+        : 'transparent',
+      boxShadow: isDark
+        ? '0 4px 30px rgba(0,0,0,0.3)'
+        : 'none',
+      backdropFilter: isDark ? 'blur(10px)' : 'none',
     }}>
+
       {/* Logo */}
       <Link to="/" style={styles.logo}>
-        🚗 <span style={styles.logoText}>CarRental</span>
+        <Car size={24} style={{ display: 'inline', marginRight: '6px' }} />
+        <span style={styles.logoText}>CarRental</span>
       </Link>
 
       {/* Desktop Links */}
@@ -42,21 +75,42 @@ function Navbar() {
             to={link.path}
             style={{
               ...styles.link,
-              color: location.pathname === link.path ? '#e94560' : 'white',
-              borderBottom: location.pathname === link.path ? '2px solid #e94560' : '2px solid transparent',
+              color: location.pathname === link.path
+                ? '#e94560'
+                : 'white',
+              borderBottom: location.pathname === link.path
+                ? '2px solid #e94560'
+                : '2px solid transparent',
             }}
           >
             {link.name}
           </Link>
         ))}
-        <Link to="/booking/1" style={styles.bookBtn}>Book Now</Link>
+        <Link to="/booking/1" style={styles.bookBtn}>
+          Book Now
+        </Link>
       </div>
 
-      {/* Mobile Menu Button */}
-      <div style={styles.menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
-        <div style={styles.bar} />
-        <div style={styles.bar} />
-        <div style={styles.bar} />
+      {/* Mobile Hamburger */}
+      <div
+        style={styles.menuBtn}
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <div style={{
+          ...styles.bar,
+          transform: menuOpen ? 'rotate(45deg) translate(5px, 6px)' : 'none',
+          transition: 'all 0.3s',
+        }} />
+        <div style={{
+          ...styles.bar,
+          opacity: menuOpen ? 0 : 1,
+          transition: 'all 0.3s',
+        }} />
+        <div style={{
+          ...styles.bar,
+          transform: menuOpen ? 'rotate(-45deg) translate(5px, -6px)' : 'none',
+          transition: 'all 0.3s',
+        }} />
       </div>
 
       {/* Mobile Menu */}
@@ -66,12 +120,24 @@ function Navbar() {
             <Link
               key={link.name}
               to={link.path}
-              style={styles.mobileLink}
+              style={{
+                ...styles.mobileLink,
+                color: location.pathname === link.path
+                  ? '#e94560'
+                  : 'white',
+              }}
               onClick={() => setMenuOpen(false)}
             >
               {link.name}
             </Link>
           ))}
+          <Link
+            to="/booking/1"
+            style={styles.mobileBookBtn}
+            onClick={() => setMenuOpen(false)}
+          >
+            Book Now
+          </Link>
         </div>
       )}
     </nav>
@@ -147,12 +213,25 @@ const styles = {
     flexDirection: 'column',
     padding: '20px 48px',
     gap: '16px',
+    borderTop: '1px solid rgba(255,255,255,0.1)',
   },
   mobileLink: {
-    color: 'white',
     textDecoration: 'none',
     fontSize: '16px',
     fontWeight: '500',
+    padding: '8px 0',
+    borderBottom: '1px solid rgba(255,255,255,0.05)',
+  },
+  mobileBookBtn: {
+    backgroundColor: '#e94560',
+    color: 'white',
+    padding: '12px 24px',
+    borderRadius: '25px',
+    textDecoration: 'none',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: '8px',
   },
 };
 

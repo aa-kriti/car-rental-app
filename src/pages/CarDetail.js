@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Car } from 'lucide-react';
 
 const cars = [
   { id: 1, name: 'Toyota Camry', type: 'Sedan', price: 50, seats: 5, fuel: 'Petrol', transmission: 'Automatic' },
@@ -20,7 +21,9 @@ function CarDetail() {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <div style={styles.image}>🚗</div>
+        <div style={styles.image}>
+          <Car size={64} />
+        </div>
         <h2 style={styles.name}>{car.name}</h2>
         <div style={styles.specs}>
           <div style={styles.spec}><span style={styles.label}>Type</span><span>{car.type}</span></div>
