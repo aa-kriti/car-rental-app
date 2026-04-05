@@ -1,14 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Users, Fuel } from 'lucide-react';
 
 const cars = [
-  { id: 1, name: 'Toyota Camry', type: 'Sedan', price: 50, seats: 5, fuel: 'Petrol', emoji: '🚗', tag: 'Popular' },
-  { id: 2, name: 'Honda CR-V', type: 'SUV', price: 70, seats: 5, fuel: 'Diesel', emoji: '🚙', tag: 'Family' },
-  { id: 3, name: 'Ford Mustang', type: 'Sports', price: 100, seats: 4, fuel: 'Petrol', emoji: '🏎️', tag: 'Sport' },
-  { id: 4, name: 'BMW 3 Series', type: 'Luxury', price: 90, seats: 5, fuel: 'Petrol', emoji: '🚘', tag: 'Luxury' },
-  { id: 5, name: 'Jeep Wrangler', type: 'SUV', price: 85, seats: 5, fuel: 'Diesel', emoji: '🛻', tag: 'Adventure' },
-  { id: 6, name: 'Hyundai Tucson', type: 'SUV', price: 65, seats: 5, fuel: 'Diesel', emoji: '🚐', tag: 'Budget' },
+  { id: 1, name: 'Toyota Camry', type: 'Sedan', price: 50, seats: 5, fuel: 'Petrol', image: '/camry.png', tag: 'Popular' },
+  { id: 2, name: 'Honda CR-V', type: 'SUV', price: 70, seats: 5, fuel: 'Diesel', image: '/crv.png', tag: 'Family' },
+  { id: 3, name: 'Ford Mustang', type: 'Sports', price: 100, seats: 4, fuel: 'Petrol', image: '/mustang.png', tag: 'Sport' },
+  { id: 4, name: 'BMW 3 Series', type: 'Luxury', price: 90, seats: 5, fuel: 'Petrol', image: '/bmw.png', tag: 'Luxury' },
+  { id: 5, name: 'Jeep Wrangler', type: 'SUV', price: 85, seats: 5, fuel: 'Diesel', image: '/jeep.png', tag: 'Adventure' },
+  { id: 6, name: 'Hyundai Tucson', type: 'SUV', price: 65, seats: 5, fuel: 'Diesel', image: '/tucson.png', tag: 'Budget' },
 ];
 
 const tagColors = {
@@ -59,7 +60,11 @@ function Highlights() {
 
             {/* Car Image */}
             <div style={styles.imageBox}>
-              <div style={styles.emoji}>{car.emoji}</div>
+              <img 
+                src={car.image}
+                alt={car.name}
+                style={styles.carImage}
+              />
             </div>
 
             {/* Car Info */}
@@ -69,8 +74,14 @@ function Highlights() {
 
               {/* Specs */}
               <div style={styles.specs}>
-                <span style={styles.spec}>💺 {car.seats} seats</span>
-                <span style={styles.spec}>⛽ {car.fuel}</span>
+                <span style={styles.spec}>
+                  <Users size={14} style={{ display: 'inline', marginRight: '4px' }} />
+                  {car.seats} seats
+                </span>
+                <span style={styles.spec}>
+                  <Fuel size={14} style={{ display: 'inline', marginRight: '4px' }} />
+                  {car.fuel}
+                </span>
               </div>
 
               {/* Price + Button */}

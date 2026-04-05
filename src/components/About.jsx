@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { CheckCircle } from 'lucide-react';
 
 function About() {
   return (
@@ -30,7 +31,7 @@ function About() {
         {/* Left — Image */}
         <div style={styles.imageSection}>
           <img 
-            src="/image.png"
+            src="/about.png"
             alt="Car Rental"
             style={styles.image}
           />
@@ -64,10 +65,10 @@ function About() {
           {/* Features */}
           <div style={styles.points}>
             {[
-              '✅ 500+ Premium Cars Available',
-              '✅ No Hidden Charges',
-              '✅ 24/7 Customer Support',
-              '✅ Instant Booking Confirmation',
+              '500+ Premium Cars Available',
+              'No Hidden Charges',
+              '24/7 Customer Support',
+              'Instant Booking Confirmation',
             ].map((point, i) => (
               <motion.div
                 key={i}
@@ -77,6 +78,7 @@ function About() {
                 viewport={{ once: true }}
                 style={styles.point}
               >
+                <CheckCircle size={18} style={{ display: 'inline', marginRight: '10px', color: '#2ecc71' }} />
                 {point}
               </motion.div>
             ))}

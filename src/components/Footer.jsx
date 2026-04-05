@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Car, MapPin, Phone, Mail, Clock, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 function Footer() {
   return (
@@ -18,7 +19,10 @@ function Footer() {
             viewport={{ once: true }}
             style={styles.brand}
           >
-            <h2 style={styles.logo}>🚗 CarRental</h2>
+            <h2 style={styles.logo}>
+              <Car size={24} style={{ display: 'inline', marginRight: '8px' }} />
+              CarRental
+            </h2>
             <p style={styles.brandDesc}>
               Your trusted car rental partner for every journey.
               Premium cars, best prices, and 24/7 support.
@@ -78,19 +82,19 @@ function Footer() {
             <h3 style={styles.colTitle}>Contact Us</h3>
             <div style={styles.contactList}>
               <div style={styles.contactItem}>
-                <span style={styles.contactIcon}>📍</span>
+                <MapPin size={16} style={styles.contactIcon} />
                 <span style={styles.contactText}>123 Main Street, City, India</span>
               </div>
               <div style={styles.contactItem}>
-                <span style={styles.contactIcon}>📞</span>
+                <Phone size={16} style={styles.contactIcon} />
                 <span style={styles.contactText}>+91 98765 43210</span>
               </div>
               <div style={styles.contactItem}>
-                <span style={styles.contactIcon}>✉️</span>
+                <Mail size={16} style={styles.contactIcon} />
                 <span style={styles.contactText}>support@carrental.com</span>
               </div>
               <div style={styles.contactItem}>
-                <span style={styles.contactIcon}>🕐</span>
+                <Clock size={16} style={styles.contactIcon} />
                 <span style={styles.contactText}>24/7 Support Available</span>
               </div>
             </div>

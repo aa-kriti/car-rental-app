@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Car } from 'lucide-react';
 
 function Hero() {
   const navigate = useNavigate();
@@ -19,7 +20,8 @@ function Hero() {
           transition={{ duration: 0.6 }}
           style={styles.badge}
         >
-          🚗 Premium Car Rental Service
+          <Car size={16} style={{ display: 'inline', marginRight: '6px' }} />
+          Premium Car Rental Service
         </motion.div>
 
         {/* Title */}
